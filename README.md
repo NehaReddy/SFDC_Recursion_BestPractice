@@ -51,14 +51,13 @@ In this case you might end up with Set<Id> .
 - This reduces unnecessary updates and avoids triggering the recursion unnecessarily.
 
 ## Approach 4 : [Using Loop Count Increment/decrement]
-
 This way we go up one , when we done with these 200 records , we're gonna go back down one . 
 We are in scenario where multiple DML's over each other  or next each other , then we enter the first batch of 200 records  - will count upto 1 .
 Then we exit that DML operation will count back to 0 .
 
-   - Now if we have the Contact.Phone → updating Account.Phone → updating Contact.Phone continues Scenario.
-    - In this scenario , we will end up counting upwards , so we go one , two, three four until we hit our max limit of recursion(16), that we want and then will die. 
-    - So just be not holding on to that any longer than necessary ,we can fix the problem of counting up infinitely .
+- Now if we have the Contact.Phone → updating Account.Phone → updating Contact.Phone continues Scenario.
+- In this scenario , we will end up counting upwards , so we go one , two, three four until we hit our max limit of recursion(16), that we want and then will die. 
+- So just be not holding on to that any longer than necessary ,we can fix the problem of counting up infinitely .
 
 ## References
 - [RecursionManager,ContactTriggerHandler] class
@@ -66,18 +65,18 @@ Then we exit that DML operation will count back to 0 .
  
 ## Example of Recursion Breakdown:
 Let’s assume you're starting with a Contact update and it leads to the following:
-   - 1. Cycle 1:
-        ○ Contact update triggers Account update → Recursion count = 1
-        ○ Account update triggers Contact update → Recursion count = 2
-   - 2. Cycle 2:
-        ○ Contact update triggers Account update → Recursion count = 3
-        ○ Account update triggers Contact update → Recursion count = 4
-   - 3. Cycle 3:
-        ○ Contact update triggers Account update → Recursion count = 5
-        ○ Account update triggers Contact update → Recursion count = 6(This continues until the recursion count reaches 16)
-    - 4. Cycle 8:
-        ○ Contact update triggers Account update → Recursion count = 15
-        ○ Account update triggers Contact update → Recursion count = 16 (maximum reached, exit).
+   - Cycle 1:
+        Contact update triggers Account update → Recursion count = 1
+        Account update triggers Contact update → Recursion count = 2
+   - Cycle 2:
+        Contact update triggers Account update → Recursion count = 3
+        Account update triggers Contact update → Recursion count = 4
+   - Cycle 3:
+        Contact update triggers Account update → Recursion count = 5
+        Account update triggers Contact update → Recursion count = 6(This continues until the recursion count reaches 16)
+    - Cycle 8:
+        Contact update triggers Account update → Recursion count = 15
+        Account update triggers Contact update → Recursion count = 16 (maximum reached, exit).
 
 ## Conclusion:
 - In this specific case, the recursion happens a total of 16 times, which means there will be 8 complete cycles  (each cycle consisting of a Contact update and an Account update). 
