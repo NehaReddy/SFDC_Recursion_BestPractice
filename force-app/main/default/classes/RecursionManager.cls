@@ -10,6 +10,7 @@ public with sharing class RecursionManager {
     }
     // Otherwise, increment the count and allow processing
     recursionCount++;
+    system.debug('recursionCount---'+recursionCount);
     return true;
     }
 
@@ -18,6 +19,7 @@ public with sharing class RecursionManager {
         if (recursionCount > 0) {
             recursionCount--;
         }
+        system.debug('recursionCount---'+recursionCount);
     }
 
     // Method to reset recursion count (useful if needed for specific test cases or scenarios)

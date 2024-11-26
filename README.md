@@ -51,7 +51,7 @@ In this case you might end up with Set<Id> .
 - This reduces unnecessary updates and avoids triggering the recursion unnecessarily.
 
 ## Approach 4 : [Using Loop Count Increment/decrement]
-This way we go up one , when we done with these 200 records , we're gonna go back down one . 
+This way we go up one , when we done with these 200 records in for loop, we're gonna go back down one . 
 We are in scenario where multiple DML's over each other  or next each other , then we enter the first batch of 200 records  - will count upto 1 .
 Then we exit that DML operation will count back to 0 .
 

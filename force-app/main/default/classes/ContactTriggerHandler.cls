@@ -4,8 +4,10 @@ public with sharing class ContactTriggerHandler {
     }
 
     public static void handleContactAfterUpdate(List<Contact> contacts) {
+        System.debug('Entering handleContactAfterUpdate method');
         // Use the RecursionManager to check if we should continue processing
         if (!RecursionManager.shouldProcess()) {
+            System.debug('RecursionManagerCOntact'+RecursionManager.shouldProcess());
             return; // Stop further processing if recursion depth exceeded
         }
 
@@ -45,9 +47,10 @@ public with sharing class ContactTriggerHandler {
                         acc.Phone = accountPhoneMap.get(acc.Id); // Set the Account's phone to the contact's phone
                     }
                 }
-
+              
                 // Perform the DML update on the Accounts
                 update accountsToUpdate;
+                System.debug('Updated contacts with new phone numbers');
             }
         }
         catch (Exception e) {
@@ -55,6 +58,7 @@ public with sharing class ContactTriggerHandler {
         } finally {
             // Always decrement the recursion count in the "finally" block to ensure it happens even if an exception occurs
             RecursionManager.decrementRecursionCount();
+            System.debug('Recursion guard reset');
         }
     }
 
